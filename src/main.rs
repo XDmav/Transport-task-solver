@@ -302,7 +302,10 @@ impl MyApp {
 		}
 		
 		for q in (j + 1)..self.result_buyers_num {
-			self.check_path(path, i, q, Direction::Horizontal, sellers_potential, buyers_potential, prod_tab)
+			self.check_path(path, i, q, Direction::Horizontal, sellers_potential, buyers_potential, prod_tab);
+			if path.is_empty() {
+				return;
+			}
 		}
 	}
 	
@@ -312,7 +315,10 @@ impl MyApp {
 		}
 		
 		for q in 0..j {
-			self.check_path(path, i, q, Direction::Horizontal, sellers_potential, buyers_potential, prod_tab)
+			self.check_path(path, i, q, Direction::Horizontal, sellers_potential, buyers_potential, prod_tab);
+			if path.is_empty() {
+				return;
+			}
 		}
 	}
 	
@@ -322,7 +328,10 @@ impl MyApp {
 		}
 		
 		for p in 0..i {
-			self.check_path(path, p, j, Direction::Vertical, sellers_potential, buyers_potential, prod_tab)
+			self.check_path(path, p, j, Direction::Vertical, sellers_potential, buyers_potential, prod_tab);
+			if path.is_empty() {
+				return;
+			}
 		}
 	}
 	
@@ -332,7 +341,10 @@ impl MyApp {
 		}
 		
 		for p in (i + 1)..self.result_sellers_num {
-			self.check_path(path, p, j, Direction::Vertical, sellers_potential, buyers_potential, prod_tab)
+			self.check_path(path, p, j, Direction::Vertical, sellers_potential, buyers_potential, prod_tab);
+			if path.is_empty() {
+				return;
+			}
 		}
 	}
 	
@@ -343,7 +355,7 @@ impl MyApp {
 				
 				if let Some(seller_potential) = sellers_potential[i] {
 					buyers_potential[j] = Some(prod_tab[i][j] as isize - seller_potential);
-				} else if let Some(buyer_potential) = buyers_potential[i] {
+				} else if let Some(buyer_potential) = buyers_potential[j] {
 					sellers_potential[i] = Some(prod_tab[i][j] as isize - buyer_potential);
 				}
 				
